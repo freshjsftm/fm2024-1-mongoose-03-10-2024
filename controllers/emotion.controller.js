@@ -15,6 +15,9 @@ module.exports.createEmotion = async (req, res, next) => {
     if (!emotion) {
       return next(new Error('emotion bad request'));
     }
+    //add emotion in Message in array emotions
+    const emotionsArr = [...message.emotions, emotion._id];
+    await Message.findByIdAndUpdate(msgId, { emotions: emotionsArr });
     res.status(201).send({ data: emotion });
   } catch (error) {
     next(error);
@@ -30,7 +33,9 @@ module.exports.getAllEmotions = async (req, res, next) => {
     if (!message) {
       return next(new Error('message not found'));
     }
-    const emotions = await Emotion.find({messageId:msgId}).populate('messageId').exec();
+    const emotions = await Emotion.find({ messageId: msgId })
+      .populate('messageId')
+      .exec();
     if (!emotions) {
       return next(new Error('emotion bad request'));
     }

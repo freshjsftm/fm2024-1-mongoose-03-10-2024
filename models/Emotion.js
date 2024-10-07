@@ -9,6 +9,7 @@ const emotionSchema = new Schema(
       enum: ['Happiness', 'Sadness', 'Love', 'Joy', 'Nervousness'],
     },
     messageId: {
+      required: true,
       type: mongoose.Types.ObjectId,
       ref: 'Message'
     },

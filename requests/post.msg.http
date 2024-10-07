@@ -4,8 +4,6 @@ Content-Type: application/json
 {
   "content":"Important message",
   "author":{
-    "login":"Bob",
-    "role":"admin"
-  },
-  "isImportant":true
+    "login":"Bob"
+  }
 }

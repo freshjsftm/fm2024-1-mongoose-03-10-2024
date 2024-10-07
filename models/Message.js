@@ -39,6 +39,7 @@ const messageSchema = new Schema(
       default: false,
     },
     isImportant: Boolean,
+    emotions: [{ type: mongoose.Types.ObjectId, ref: 'Emotion' }],
   },
   {
     timestamps: true,

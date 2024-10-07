@@ -1,4 +1,5 @@
 const Message = require('../models/Message');
+const Emotion = require('../models/Emotion');
 
 module.exports.createMessage = async (req, res, next) => {
   try {
@@ -30,7 +31,8 @@ module.exports.getMessage = async (req, res, next) => {
     const {
       params: { msgId },
     } = req;
-    const message = await Message.findById(msgId);
+    //const message = await Message.findById(msgId).populate('emotions').exec();
+    const message = await Message.findById(msgId).populate({path: 'emotions', select: 'name'});
     if (!message) {
       return next(new Error('message not found'));
     }
@@ -65,6 +67,8 @@ module.exports.deleteMessage = async (req, res, next) => {
     if (!message) {
       return next(new Error('message not found'));
     }
+    //delete all emotions 
+    await Emotion.deleteMany({messageId: msgId});
     res.status(200).send({ data: message });
   } catch (error) {
     next(error);
