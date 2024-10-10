@@ -32,7 +32,10 @@ module.exports.getMessage = async (req, res, next) => {
       params: { msgId },
     } = req;
     //const message = await Message.findById(msgId).populate('emotions').exec();
-    const message = await Message.findById(msgId).populate({path: 'emotions', select: 'name'});
+    const message = await Message.findById(msgId).populate({
+      path: 'emotions',
+      select: 'name',
+    });
     if (!message) {
       return next(new Error('message not found'));
     }
@@ -67,9 +70,35 @@ module.exports.deleteMessage = async (req, res, next) => {
     if (!message) {
       return next(new Error('message not found'));
     }
-    //delete all emotions 
-    await Emotion.deleteMany({messageId: msgId});
+    //delete all emotions
+    await Emotion.deleteMany({ messageId: msgId });
     res.status(200).send({ data: message });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.deleteManyMessages = async (req, res, next) => {
+  try {
+    const {
+      query, //{author+isImportant}
+    } = req;
+    if (query) {
+      const filter = {};
+      if (author in query) {
+        filter['author.login'] = query.author;
+      }
+      if (isImportant in query) {
+        filter['isImportant'] = query.isImportant;
+      }
+      if (isRead in query) {
+        filter['isRead'] = query.isRead;
+      }
+      const deleteCount = await Message.deleteMany(filter);
+      return res.status(200).send({ data: `success delete - ${deleteCount}` });
+    }
+    const deleteCount = await Message.deleteMany();
+    res.status(200).send({ data: `success delete ` });
   } catch (error) {
     next(error);
   }
