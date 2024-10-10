@@ -1,1 +1,1 @@
-GET http://localhost:3000/messages/6703852f6965b5d4cf44b697 HTTP/1.1
+GET http://localhost:8080/messages/6707904b6ea642143adbd569 HTTP/1.1

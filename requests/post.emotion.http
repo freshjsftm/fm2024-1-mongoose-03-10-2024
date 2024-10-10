@@ -1,6 +1,6 @@
-POST http://localhost:3000/messages/670386a90a79a81dfc790081/emotions HTTP/1.1
+POST http://localhost:8080/messages/6707904b6ea642143adbd569/emotions HTTP/1.1
 Content-Type: application/json
 
 {
-  "name":"Joy"
+  "name":"Love"
 }
