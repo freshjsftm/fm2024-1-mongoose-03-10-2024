@@ -1,0 +1,25 @@
+name: fm_mongoose
+services:   
+  back:
+    build: 
+      context: ./
+    ports:
+      - "8080:3000"
+    environment:
+      - PORT=3000
+    depends_on: 
+      - db_mongo
+    restart: on-failure  
+    networks:
+      - mongo-bridge-pr 
+
+  db_mongo:
+    image: mongo:latest
+    volumes:
+      - ~/backup:/data/db
+    restart: always
+    networks:
+      - mongo-bridge-pr
+
+networks:
+  mongo-bridge-pr:       

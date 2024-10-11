@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const app = require('./app');
 
 mongoose
-.connect('mongodb://172.17.0.2:27017/fm2024mongoose')
+.connect('mongodb://db_mongo:27017/fm_mongoose')
 .catch((err) => {
   console.log('Error in DB connection: ' + err);
   process.exit(1);

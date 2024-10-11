@@ -1,0 +1,28 @@
+name: fm_mongoose_dev
+services:
+  back:
+    build: 
+      context: ./
+      dockerfile: Dockerfile-dev
+    volumes:
+      - ./:/server:ro 
+    ports: 
+      - "8080:3000"   
+    environment:
+      - PORT=3000      
+    depends_on: 
+      - db_mongo
+    restart: on-failure  
+    networks:
+      - mongo-bridge-dev
+
+  db_mongo:
+    image: mongo:latest
+    volumes:
+      - ~/Projects/PFM2024-1/db_mongo:/data/db
+    restart: always
+    networks:
+      - mongo-bridge-dev
+
+networks:
+  mongo-bridge-dev:
